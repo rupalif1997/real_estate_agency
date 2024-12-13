@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-8  mt-4  mx-auto text-white">
+<h1 class="display-4 "> Create new listing</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="/makepayment/<listing_id>/"><button class="btn btn-danger">Make payment</button></a>
+    
+</from>
+
+</div>
+{% endblock content %}

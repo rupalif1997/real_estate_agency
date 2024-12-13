@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if messages %}
+  <ul class="messages text-white " style="text-align: center; border: 1px solid #dddddd; padding: 8px;">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+  
+ <h2 align="center  " class="text-warning" >Customer Dashboard </h2>
+ 
+ <div class=" text-white">
+ <table border="2" align="center" >
+    <tr style="text-align: center;" >
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Sr.no</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">First_Name</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Last_Name</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Contact</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Email</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px;">Address</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">City</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Apartment_size</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Edit</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px; ">Delete</th>
+    </tr>
+    {% for x in data %}
+    <tr>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;"> {{ forloop.counter }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.first_name }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.last_name }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.contact }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.email }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.address }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.city }}</td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">{{ x.apartment_size }}</td>
+
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;"> 
+          {% if user.is_authenticated and user == x.user %}
+           <a href="edit/{{x.id}}" style="color: red;">Edit</a>  
+          {% else %}
+            Edit
+          {% endif %}
+        </td> 
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;"> 
+          {% if user.is_authenticated and user == x.user %}
+           <a href="/delete/{{x.id}}" style="color: red;" >Delete</a>  
+          {% else %}
+            Delete
+          {% endif %}
+        </td>
+        <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">
+          {% if user.is_authenticated and user == x.user %}
+             <a href="send_email/{{x.id}}/" style="color: red;" >Send Email</a>
+          {% else %}
+             Email Sent
+          {% endif %}
+       </td>
+         
+    </tr>
+    {% endfor %}
+    
+ </table>
+ <a href="/customer" style="display: flex; align-items: center; justify-content: center;  margin:10px 500px 1px 500px;" class="btn btn-secondary"> Add Customer Details</a>
+ <a href="/list/" style="display: flex; align-items: center; justify-content: center;  margin:10px 500px 1px 500px;" class="btn btn-secondary"> Go to listing</a>
+</div>
+{% endblock content %}

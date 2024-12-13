@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container  text-white">
+  <div class="row">
+    <div class="col-8">   
+      <!-- Display filtered listings -->
+      {% for listing in listings %}
+        <div class="card mb-4 mt-2 " style="max-width: 1000px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ listing.image.url }}" class="img-fluid rounded-start" alt="{{ listing.title }}">
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">{{ listing.title }}</h3>
+                <h6><i class="bi bi-geo-alt">{{ listing.address }}</i></h6>
+                <a href="/listings/{{ listing.id }}" class="btn btn-warning"> View details</a>
+                <h6 class="mt-2"><i class="bi bi-graph-up-arrow">100 people recently enquired</i></h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="col-4 mt-5">
+      <!-- Filter form (similar to your existing form) -->
+      <form action="{% url 'filter_listings' %}" method="get">
+
+        <div class="mb-3">
+          <label for="address">Address:</label>
+          <input type="text" name="address" class="form-control" id="address" value="{{ request.GET.address }}">
+        </div>
+        
+        <div class="mb-3">
+          <label for="min_bedrooms">Min Bedrooms:</label>
+          <input type="number" name="min_bedrooms" class="form-control" id="min_bedrooms" value="{{ request.GET.min_bedrooms }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="max_price">Max Price:</label>
+          <input type="number" name="max_price" class="form-control" id="max_price" value="{{ request.GET.max_price }}">
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
